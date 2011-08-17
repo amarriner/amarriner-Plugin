@@ -6,6 +6,7 @@ using System.Text;
 using System.IO;
 using Terraria_Server;
 using Terraria_Server.Plugin;
+using Terraria_Server.Collections;
 using Terraria_Server.Commands;
 using Terraria_Server.Events;
 using Terraria_Server.Logging;
@@ -71,6 +72,9 @@ namespace amarrinerPlugin
         public override void onPlayerJoin(PlayerLoginEvent Event)
         {
             Event.Sender.sendMessage("Welcome, " + Event.Player.Name, 255, 100, 200, 100);
+
+            Item item = Registries.Item.Create("Statue");
+            Item.NewItem((int)Event.Player.Position.X, (int)Event.Player.Position.Y, Event.Player.Width, Event.Player.Height, item.Type);
         }
 
         private static void CreateDirectory(string dirPath)

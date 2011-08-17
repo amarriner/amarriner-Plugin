@@ -37,7 +37,18 @@ namespace amarrinerPlugin.Commands
                 result += random.Next(1, die);
             }
 
-            server.notifyAll(sender.Name + " rolled a " + result.ToString() + " on " + times.ToString() + "d" + die.ToString(), true);
+            Player player = server.GetPlayerByName(sender.Name);
+
+            if (! player.PluginData.ContainsKey("roll"))
+            {
+                player.PluginData.Add("roll", result);
+            }
+            else
+            {
+                player.PluginData["roll"] = result;
+            }
+
+            server.notifyAll(player.Name + " rolled a " + player.PluginData["roll"] + " on " + times.ToString() + "d" + die.ToString(), true);
         }
     }
 }
