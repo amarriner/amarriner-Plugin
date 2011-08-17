@@ -24,7 +24,7 @@ namespace amarrinerPlugin
          */
 
         public Properties properties;
-        public static Plugin plugin;
+        public static amarrinerPlugin plugin;
 
         public override void Load()
         {
@@ -43,21 +43,17 @@ namespace amarrinerPlugin
             //setup a new properties file
             properties = new Properties(pluginFolder + Path.DirectorySeparatorChar + "amarrinerplugin.properties");
             properties.Load();
-            //properties.pushData(); //Creates default values if needed. [Out-Dated]
             properties.Save();
 
             //read properties data
             //spawningAllowed = properties.SpawningCancelled;
-            //tileBreakageAllowed = properties.TileBreakage;
-            //explosivesAllowed = properties.ExplosivesAllowed;
         }
 
         public override void Enable()
         {
             Program.tConsole.WriteLine(base.Name + " enabled.");
             //Register Hooks
-            //this.registerHook(Hooks.PLAYER_TILECHANGE);
-            //this.registerHook(Hooks.PLAYER_PROJECTILE);
+            this.registerHook(Hooks.PLAYER_LOGIN);
 
             //Add Commands
             AddCommand("roll")
@@ -65,12 +61,6 @@ namespace amarrinerPlugin
                 .WithDescription("Roll a six-sided die")
                 .WithHelpText("Usage:   /roll")
                 .Calls(Commands.Commands.roll);
-
-            //Main.stopSpawns = !spawningAllowed;
-            //if (Main.stopSpawns)
-            //{
-            //    ProgramLog.Log("Disabled NPC Spawning");
-            //}
         }
 
         public override void Disable()
@@ -78,25 +68,9 @@ namespace amarrinerPlugin
             Program.tConsole.WriteLine(base.Name + " disabled.");
         }
 
-        public override void onPlayerTileChange(PlayerTileChangeEvent Event)
+        public override void onPlayerJoin(PlayerLoginEvent Event)
         {
-            //if (!Enabled || tileBreakageAllowed == false) { return; }
-            //ProgramLog.Log("[TSDM Plugin] Cancelled Tile change of Player: " + ((Player)Event.Sender).Name);
-            //Event.Cancelled = true;
-        }
-
-        public override void onPlayerProjectileUse(PlayerProjectileEvent Event)
-        {
-            //if (Enabled && !explosivesAllowed)
-            //{
-
-            //    int type = Event.Projectile.Type;
-            //    if (type == 28 || type == 29 || type == 37)
-            //    {
-            //        Event.Cancelled = true;
-            //        ProgramLog.Log("[TSDM Plugin] Cancelled Explosive usage of Player: " + ((Player)Event.Sender).Name);
-            //    }
-            //}
+            Event.Sender.sendMessage("Welcome, " + Event.Player.Name, 255, 100, 200, 100);
         }
 
         private static void CreateDirectory(string dirPath)

@@ -22,14 +22,22 @@ namespace amarrinerPlugin.Commands
         {
             Random random = new Random();
             int result = 0;
-            string[] arg = args[0].Split('d');
-            int times = Int32.Parse(arg[0]);
-            int die = Int32.Parse(arg[1]);
+            int times = 1;
+            int die = 6;
+
+            if (args.Count > 0)
+            {
+                string[] arg = args[0].Split('d');
+                times = Int32.Parse(arg[0]);
+                die = Int32.Parse(arg[1]);
+            }
+
             for (int i = 0; i < times; i++)
             {
                 result += random.Next(1, die);
             }
-            server.notifyAll(sender.Name + " rolled a " + result.ToString(), true);
+
+            server.notifyAll(sender.Name + " rolled a " + result.ToString() + " on " + times.ToString() + "d" + die.ToString(), true);
         }
     }
 }
