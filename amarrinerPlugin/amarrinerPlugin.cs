@@ -62,6 +62,8 @@ namespace amarrinerPlugin
                 .WithDescription("Roll a six-sided die")
                 .WithHelpText("Usage:   /roll")
                 .Calls(Commands.Commands.roll);
+
+
         }
 
         public override void Disable()
